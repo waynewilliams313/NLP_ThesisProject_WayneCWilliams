@@ -1,66 +1,144 @@
-# AI-Assisted Chinese Reading and Writing Tutor (HSK 3.0 Band 1 Prototype)
+# NLP Thesis Project – Wayne C. Williams
 
-This project is a thesis-ready starter implementation for an AI-assisted Chinese learning app built around a **word-centered loop**:
+> This repository contains the source code, tests, configuration, and processed project data files for my NLP thesis project. It is organized for academic review of the project’s design, implementation, and evaluation framework.
 
-1. Select a target word from a 50-word thesis subset
-2. Show a scaffolded reading passage (Chinese + Pinyin + English)
-3. Check a comprehension answer
-4. Show a writing prompt using the same target word
-5. Evaluate the learner's sentence
-6. Save progress and move to the next word
+## Project Overview
 
-## Data sources included
-- `data/thesis_50_words_ready.csv`
-- `data/reading_items.json`
-- `data/writing_items.json`
-- `data/progress_init.sql`
-- `data/progress_seed.db`
-- `data/Official_vocabulary_band1.pdf`
+This repository supports a thesis project in **Natural Language Processing (NLP)** focused on **beginner-level Chinese reading and writing assistance**. The project explores how a Qwen-based language model can be used within an application that supports structured vocabulary-constrained tasks, reading evaluation, writing evaluation, feedback generation, and learner progress tracking.
 
-## Important implementation note
-The **official Band 1 PDF** is the source of truth for the official vocabulary list. The reading passages, questions, and writing prompts are prototype lesson content created for this thesis system.
+The system is designed around **HSK Band 1 and Band 2 vocabulary** and is intended to investigate whether a fine-tuned model performs better than a non-fine-tuned baseline under the same controlled task setting.
 
-## Quick start
+## Research Objective
 
-### 1. Create a virtual environment and install dependencies
+The main objective of this thesis project is to evaluate whether **fine-tuning Qwen on HSK Band 1 and Band 2 vocabulary-based data** improves performance for beginner-level Chinese reading and writing tasks when compared with a **baseline Qwen model without fine-tuning**, using the same vocabulary constraints.
+
+More specifically, the project examines whether fine-tuning leads to stronger task performance, more appropriate vocabulary usage, and better support for controlled beginner-level Chinese language learning activities.
+
+## Model Conditions
+
+The project is designed around two main model conditions:
+
+- **Baseline model:** Qwen used **without fine-tuning**, with tasks constrained to **HSK Band 1 and Band 2 vocabulary**
+- **Fine-tuned model:** Qwen **fine-tuned** for the same **HSK Band 1 and Band 2 vocabulary-based task setting**
+
+These two conditions are intended to be evaluated within the same application framework so that differences in performance can be measured under comparable conditions.
+
+## Evaluation Design
+
+The baseline and fine-tuned Qwen models are intended to be **evaluated and compared using cross-validation** to measure differences in performance.
+
+The evaluation design is structured to support comparison between the two model conditions under the same beginner-level vocabulary constraints. The goal is to determine whether fine-tuning improves the quality and consistency of outputs for reading- and writing-related tasks in the application.
+
+Depending on the final experimental setup described in the thesis document, evaluation may include performance measures relevant to NLP task quality, response appropriateness, and controlled vocabulary usage.
+
+## System Purpose
+
+This application is designed as an **AI-assisted Chinese reading and writing tutor** for beginner-level use. It supports structured educational interactions while remaining grounded in an NLP-focused system design.
+
+The repository demonstrates:
+
+- application implementation
+- modular NLP-related project components
+- dataset loading and processing
+- reading and writing evaluation workflows
+- feedback parsing and prompt construction
+- learner progress tracking
+- supporting test files
+- processed dataset and initialization files used by the project
+
+## Repository Structure
+
+### Root Files
+
+- `app.py` – main application entry point
+- `README.md` – repository overview, academic context, and usage notes
+- `requirements.txt` – Python dependencies required for the project
+
+### Source Code Modules
+
+The `src` portion of the project contains the main application and processing logic, including:
+
+- `config.py` – configuration settings and project file paths
+- `dataset_loader.py` – loads project dataset files
+- `feedback_parser.py` – parses and structures feedback responses
+- `input_normalizer.py` – normalizes and preprocesses user input
+- `model_loader.py` – handles model-related loading logic
+- `progress_db.py` – manages learner progress database operations
+- `prompt_builder.py` – constructs prompts for the application workflow
+- `reading_evaluator.py` – supports reading-related evaluation logic
+- `ui_helpers.py` – helper functions for interface-related tasks
+- `word_selector.py` – selects vocabulary items for activities
+- `writing_evaluator.py` – supports writing-related evaluation logic
+
+### Test Files
+
+The repository includes test files for selected components:
+
+- `test_dataset.py`
+- `test_parser.py`
+- `test_progress.py`
+
+These tests help verify core functionality of the dataset, parsing, and progress-related modules.
+
+### Data Files
+
+The public repository includes processed project files used by the application, such as:
+
+- `thesis_30_progress_init.sql`
+- `thesis_30_reading_items.json`
+- `thesis_30_words_checked.csv`
+- `thesis_30_words_ready.csv`
+- `thesis_30_writing_items.json`
+
+These files support structured reading and writing tasks, vocabulary organization, and project database initialization.
+
+## Application Workflow
+
+At a high level, the system is intended to support the following workflow:
+
+1. Load processed vocabulary and task-related data files
+2. Select or prepare structured beginner-level reading or writing items
+3. Accept and normalize user input
+4. Build prompts and route processing through the application pipeline
+5. Evaluate reading or writing responses
+6. Parse and structure feedback
+7. Record and update learner progress for later analysis
+
+This workflow allows the project to function not only as an application prototype, but also as an evaluable NLP system within the thesis context.
+
+## Dataset and Vocabulary Scope
+
+This project is intentionally constrained to **HSK Band 1 and Band 2 vocabulary** in order to maintain a controlled beginner-level task environment.
+
+The purpose of this vocabulary restriction is to:
+
+- reduce task complexity
+- align the system with beginner-level Chinese learning needs
+- support clearer baseline-versus-fine-tuned model comparison
+- provide a more structured evaluation setting for thesis analysis
+
+The public repository includes **processed project data files** used by the system. Some source or reference materials used during dataset preparation are not redistributed in this public version of the repository.
+
+## Public Repository Note
+
+This GitHub repository is a **public academic project version** prepared for review of the project structure, codebase, and evaluation framework.
+
+For public-sharing and repository-cleanliness reasons:
+
+- temporary runtime files are excluded
+- local virtual environment files are excluded
+- cache files are excluded
+- old unused files are excluded
+- certain raw source/reference materials are not redistributed in this repository
+
+This repository therefore emphasizes the implementation and processed project resources appropriate for public academic review.
+
+## Setup and Execution
+
+To run the project locally:
+
+1. Clone or download this repository
+2. Install the required dependencies:
+
 ```bash
-python -m venv .venv
-source .venv/bin/activate   # macOS/Linux
-# .venv\Scripts\activate   # Windows PowerShell
 pip install -r requirements.txt
-```
-
-### 2. Run in mock mode first
-Mock mode lets you test the full app structure without loading a large model.
-
-```bash
-set USE_MOCK_MODEL=true      # Windows PowerShell
-# export USE_MOCK_MODEL=true # macOS/Linux
-python app.py
-```
-
-### 3. Run with Qwen later
-```bash
-set USE_MOCK_MODEL=false      # Windows PowerShell
-# export USE_MOCK_MODEL=false # macOS/Linux
-python app.py
-```
-
-The app uses `Qwen/Qwen2.5-0.5B-Instruct` when mock mode is off.
-
-## Recommended build order
-1. Verify one word from start to finish in mock mode
-2. Verify the same word with the real Qwen model
-3. Test 10 words
-4. Test all 50 thesis words
-5. Add evaluation logs and screenshots for the thesis
-
-## Files you will likely edit most
-- `src/config.py`
-- `src/reading_evaluator.py`
-- `src/writing_evaluator.py`
-- `src/feedback_parser.py`
-- `app.py`
-
-## Thesis-safe claim
-The app architecture is designed to scale to the full official Band 1 curriculum, while this implementation and evaluation use a representative 50-word subset.
